@@ -26,7 +26,7 @@ def save_and_encrypt_notes():
     master_secret = master_secret_input.get()
     if len(title) == 0 or len (message) == 0 or len(master_secret) == 0 :
         messagebox.showwarning(title="Error!!!", message="Please give me all key of Secret.")
-    else:
+    else :
         #encryption
         message_encrypted =encode(master_secret, message)
         try:
@@ -39,6 +39,22 @@ def save_and_encrypt_notes():
             title_entry.delete(0,END)
             master_secret_input.delete(0,END)
             input_text.delete("1.0",END)
+
+def decrypt_notes():
+    message_encrypted = input_text.get("1.0",END)
+    master_secret = master_secret_input.get()
+
+    if len(message_encrypted) ==0 or len(master_secret) == 0:
+        messagebox.showwarning(title="Error!!!", message="Please give me all key of Secret.")
+    else:
+        try:
+            decrypte_message = decode(master_secret,message_encrypted)
+            input_text.delete("1.0",END)
+            input_text.insert("1.0",decrypte_message)
+        except:
+            messagebox.showwarning(message="This message is not Hidden !!")
+
+
 
 
 
@@ -82,7 +98,7 @@ master_secret_input.pack()
 save_button = Button(text="Save and Hide in shadow ",command=save_and_encrypt_notes)
 save_button.pack()
 
-decrypt_button =Button(text="Show me hiden")
+decrypt_button =Button(text="Show me hiden",command=decrypt_notes)
 decrypt_button.pack()
 
 
